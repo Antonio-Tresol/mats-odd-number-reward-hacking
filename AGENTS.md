@@ -29,11 +29,11 @@ only to record what is true.
   six tabs, a snapshot from 2026-08-21. `notes/mats/neel-research-taste.md`
   maps the mentor's last year of papers against his stated interests, and
   `references/neel.bib` lists those papers.
-- `kb/` is the reading archive, gitignored except for its README: the papers
-  the admissions document links, by arXiv id, the mentor's posts as markdown,
-  the past applications he shares as examples, and the compiled reader he
-  recommends as context. Read it in place; nothing in `kb/sources/gdocs/` is
-  copied out or quoted in a deliverable.
+- `data/mats/` is the reading archive, gitignored except for its README: the
+  papers the admissions document links, by arXiv id, the mentor's posts as
+  markdown, the past applications he shares as examples, and the compiled
+  reader he recommends as context. Read it in place; nothing in
+  `data/mats/sources/gdocs/` is copied out or quoted in a deliverable.
 - Antonio writes the application form answers and the executive summary in his
   own voice. Agents draft, critique with an anti-sycophancy framing, make
   figures, and write the technical reports and notes he draws from.
@@ -164,6 +164,14 @@ Three things do not survive a clone, and all three are quick.
 
    Symptom if missed: `check.sh` fails `skill_portability` (HSKILL-003) and
    Codex silently loads zero skills.
+
+4. **The MATS reading archive.** `data/mats/` is gitignored except for its
+   README, which lists what belongs there. Copy `sources/` and `INDEX.md` from
+   the application workspace this repository is nested in:
+
+   ```bash
+   cp -R ../sources ../INDEX.md data/mats/
+   ```
 
 `data/papers/` is also gitignored, so downloaded papers do not travel. No tree
 node cites one; the notes derived from them are committed instead, which is what

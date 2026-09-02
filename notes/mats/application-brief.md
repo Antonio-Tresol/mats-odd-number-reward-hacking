@@ -197,11 +197,11 @@ runs ahead of supply.
 
 ## The reading archive
 
-`kb/` holds a local copy of the workspace's archive, gitignored except for its
-README: `kb/INDEX.md`, a ledger of the 189 links in the admissions document;
-`kb/sources/papers/` (arXiv PDFs by identifier); `kb/sources/web/` (LessWrong
+`data/mats/` holds a local copy of the workspace's archive, gitignored except
+for its README: `data/mats/INDEX.md`, a ledger of the 189 links in the admissions document;
+`data/mats/sources/papers/` (arXiv PDFs by identifier); `data/mats/sources/web/` (LessWrong
 and Alignment Forum posts as markdown, and text extractions of web articles);
-and `kb/sources/gdocs/` (six past applications shared in confidence, plus the
+and `data/mats/sources/gdocs/` (six past applications shared in confidence, plus the
 303k-word compiled reader the document recommends as context). The past
 applications are read there and never copied elsewhere or quoted in a
 deliverable. The canonical copy stays in the workspace one level up.

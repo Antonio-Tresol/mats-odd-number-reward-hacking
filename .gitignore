@@ -27,7 +27,8 @@ notes/take-home/Model Forensics SPAR Take-home.md
 # The MATS reading archive: 76 arXiv papers, six past applications shared in
 # confidence, the mentor's posts, and the ledger that maps each link in the
 # admissions document to its file. Copied from the application workspace so
-# agents can read it in place; it is other people's work and never travels
-# with the repository. Only kb/README.md, which says how to restore it, is tracked.
-kb/*
-!kb/README.md
+# agents can read it in place, beside data/papers/ where the same rule already
+# holds: raw sources stay local, the notes derived from them are committed.
+# Only data/mats/README.md, which says how to restore it, is tracked.
+data/mats/*
+!data/mats/README.md

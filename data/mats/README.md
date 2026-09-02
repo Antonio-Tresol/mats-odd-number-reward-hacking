@@ -1,4 +1,4 @@
-# kb: the MATS reading archive (local only)
+# The MATS reading archive (local only)
 
 Everything in this directory except this file is gitignored. It is a copy of
 the `sources/` archive and `INDEX.md` ledger from the private application
@@ -14,7 +14,10 @@ workspace this repository is nested in, fetched 2026-08-21:
 | `sources/gdocs/default_600k_md.md` | The compiled reader the admissions document recommends as context, about 303k words |
 
 To restore it on a fresh clone, copy `../sources` and `../INDEX.md` from the
-workspace into this directory. `sources/web/notion_empathic_machines.md` is a
+workspace into this directory. It sits beside `data/papers/`, the store the
+arXiv MCP server writes to as markdown, under the same rule: raw sources stay
+local and gitignored, and the notes derived from them are committed under
+`notes/`. `sources/web/notion_empathic_machines.md` is a
 summary written by an LLM, so it is never quoted as the author's words.
 
 The past applications are other people's work, shared with one applicant. They
