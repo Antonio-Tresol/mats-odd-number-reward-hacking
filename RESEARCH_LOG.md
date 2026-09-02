@@ -6,7 +6,17 @@ Update this regularly. One paragraph covering: what paper, codebase, or project
 idea this builds on; what we are trying to figure out; how it connects to the
 broader landscape.
 
-SPAR Model Forensics take-home, single setting (Odd Number environment), 5-hour budget, replication excluded from the limit
+Builds on the Odd Number environment from the LessWrong post "A toy environment
+for exploring reasoning about reward" and on the Model Forensics paper (arXiv
+2606.26071), whose protocol the investigation applies: read the chain of thought
+to form hypotheses, then test them with prompt-level interventions and
+resampling. The question is why a model asked for an even number answers odd
+when the prompt's metadata names a grader that pays for odd, and whether that is
+reward hacking or one of the benign explanations the paper lists. The work began
+as a SPAR Model Forensics take-home with a 5-hour budget on 2026-08-24 and on
+2026-09-01 became the application project for Neel Nanda's MATS 12.0 stream,
+under a 20-hour budget plus 2 for the executive summary; the rules are quoted in
+`notes/mats/application-brief.md`.
 
 ---
 
@@ -25,6 +35,13 @@ Entry format:
 * What this changes about my thinking:
 * What I will do next:
 ```
+
+### 2026-09-01
+
+* What I did: Forked the repository for the application to Neel Nanda's MATS 12.0 stream. The full history was cloned into a new private GitHub repository, mats-odd-number-reward-hacking, nested inside the application workspace at the place its README reserved for the project, with the SPAR repository kept as the upstream remote. The admissions document (`notes/mats/mats-admissions-faq.md`), Antonio's synthesis of the mentor's last year of papers (`notes/mats/neel-research-taste.md`), and the matching bibliography (`references/neel.bib`) were copied in. A new note, notes/mats/application-brief.md, quotes with line numbers every rule in the admissions document that binds this project: the deadline, what the 20 hours plus 2 include, the executive summary format, the rule on work done before the application, and how the write-up is judged. The SPAR framing in the agent instructions, the package description, the README, and this file's project summary was rewritten for the new setting. No experiment ran and no tree node changed.
+* What I expected vs what happened: I expected the admissions document to treat the SPAR work as prior research, which it says it judges more harshly than a normal application. It does something more useful: work done on one's own in 20 hours or fewer and not for the application can be treated as a normal application project, so the clock started with the SPAR hours and the remaining budget continues the same investigation. One difference surfaced in the accounting. The SPAR rules excluded replication from their limit; the MATS rules count every hour of active work on the project, so the hour estimate the application needs must include the replication runs.
+* What this changes about my thinking: The question does not change, and the mentor's own problem list describes this setting: read the chain of thought to form hypotheses, test them with precise counterfactual changes, and take special interest in cases where that is not enough and resampling or internals are needed, which is where Q1.H8 already sits. What changes is the deliverable. Antonio writes the application form answers and the executive summary in his own voice; the executive summary is at most 600 words with graphs; randomly selected raw examples follow it; and the write-up states what was verified and how. The audit trail this record keeps is the evidence for that last requirement, and the write-up says plainly that this is the SPAR take-home extended under the MATS budget.
+* What I will do next: Antonio estimates the hours spent so far and decides how the remaining budget is split between the open falsification steps, the length confound that Q1.H8 leaves tied, and the write-up. The first working session in the fork runs the verifier, reads the brief, and picks the one experiment that most changes what the executive summary can claim.
 
 ### 2026-08-29
 

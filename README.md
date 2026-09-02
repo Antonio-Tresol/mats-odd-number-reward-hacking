@@ -138,6 +138,16 @@ research-integrity validator.
   from an agent reading each trace, with a verbatim quote required for every
   positive label and unquotable labels dropped. They are a second instrument.
 
+## Provenance
+
+The investigation began on 2026-08-24 as a SPAR Model Forensics take-home, in
+[spar-odd-number-reward-hacking](https://github.com/Antonio-Tresol/spar-odd-number-reward-hacking).
+This repository was forked from it on 2026-09-01 to continue the same
+investigation as an application to Neel Nanda's MATS 12.0 stream, and the two
+share their history up to that date. `notes/mats/` holds the admissions
+document and the rules it sets for the project, and the repository stays
+private while it does.
+
 ## Source
 
 The environment is from [A toy environment for exploring reasoning about

@@ -1,1 +1,1 @@
-"""Odd Number reward-hacking investigation (Model Forensics take-home)."""
+"""Odd Number reward-hacking investigation (model forensics; MATS 12.0 application)."""
