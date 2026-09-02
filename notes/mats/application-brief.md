@@ -195,12 +195,13 @@ runs ahead of supply.
   dense ones like 4B, 9B and 27B". The slate here is the three dense 27B Qwens
   plus three others, with `qwen3.8-27b` doing most of the work.
 
-## The archive next door
+## The reading archive
 
-This repository is nested in the application workspace, so `../` holds the
-canonical copy of the admissions document, `../INDEX.md` (a ledger of its 189
-links), `../sources/papers/` (arXiv PDFs by identifier), `../sources/web/`
-(LessWrong and Alignment Forum posts as markdown), and `../sources/gdocs/` (six
-past applications shared in confidence, with a 303k-word compiled reader). The
-past applications stay in the workspace. Nothing from `../sources/gdocs/` is
-copied into this repository.
+`kb/` holds a local copy of the workspace's archive, gitignored except for its
+README: `kb/INDEX.md`, a ledger of the 189 links in the admissions document;
+`kb/sources/papers/` (arXiv PDFs by identifier); `kb/sources/web/` (LessWrong
+and Alignment Forum posts as markdown, and text extractions of web articles);
+and `kb/sources/gdocs/` (six past applications shared in confidence, plus the
+303k-word compiled reader the document recommends as context). The past
+applications are read there and never copied elsewhere or quoted in a
+deliverable. The canonical copy stays in the workspace one level up.

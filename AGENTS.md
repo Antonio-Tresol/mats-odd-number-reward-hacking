@@ -29,6 +29,11 @@ only to record what is true.
   six tabs, a snapshot from 2026-08-21. `notes/mats/neel-research-taste.md`
   maps the mentor's last year of papers against his stated interests, and
   `references/neel.bib` lists those papers.
+- `kb/` is the reading archive, gitignored except for its README: the papers
+  the admissions document links, by arXiv id, the mentor's posts as markdown,
+  the past applications he shares as examples, and the compiled reader he
+  recommends as context. Read it in place; nothing in `kb/sources/gdocs/` is
+  copied out or quoted in a deliverable.
 - Antonio writes the application form answers and the executive summary in his
   own voice. Agents draft, critique with an anti-sycophancy framing, make
   figures, and write the technical reports and notes he draws from.
