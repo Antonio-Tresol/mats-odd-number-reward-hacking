@@ -2,7 +2,8 @@
 
 Everything in this directory except this file is gitignored. It is a copy of
 the `sources/` archive and `INDEX.md` ledger from the private application
-workspace this repository is nested in, fetched 2026-08-21:
+workspace, a separate repository whose location is recorded in
+`CLAUDE.local.md`, fetched 2026-08-21:
 
 | Path | What |
 |---|---|
@@ -13,7 +14,7 @@ workspace this repository is nested in, fetched 2026-08-21:
 | `sources/gdocs/*.pdf`, `*.md` | Six past applications, shared in confidence |
 | `sources/gdocs/default_600k_md.md` | The compiled reader the admissions document recommends as context, about 303k words |
 
-To restore it on a fresh clone, copy `../sources` and `../INDEX.md` from the
+To restore it on a fresh clone, copy `sources/` and `INDEX.md` from that
 workspace into this directory. It sits beside `data/papers/`, the store the
 arXiv MCP server writes to as markdown, under the same rule: raw sources stay
 local and gitignored, and the notes derived from them are committed under

@@ -166,12 +166,9 @@ Three things do not survive a clone, and all three are quick.
    Codex silently loads zero skills.
 
 4. **The MATS reading archive.** `data/mats/` is gitignored except for its
-   README, which lists what belongs there. Copy `sources/` and `INDEX.md` from
-   the application workspace this repository is nested in:
-
-   ```bash
-   cp -R ../sources ../INDEX.md data/mats/
-   ```
+   README, which lists what belongs there. Copy `sources/` and `INDEX.md` into
+   it from the application workspace, a separate private repository whose
+   location on this machine is recorded in `CLAUDE.local.md`.
 
 `data/papers/` is also gitignored, so downloaded papers do not travel. No tree
 node cites one; the notes derived from them are committed instead, which is what

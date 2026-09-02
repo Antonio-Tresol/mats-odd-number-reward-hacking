@@ -204,4 +204,5 @@ and Alignment Forum posts as markdown, and text extractions of web articles);
 and `data/mats/sources/gdocs/` (six past applications shared in confidence, plus the
 303k-word compiled reader the document recommends as context). The past
 applications are read there and never copied elsewhere or quoted in a
-deliverable. The canonical copy stays in the workspace one level up.
+deliverable. The canonical copy stays in the application workspace, a separate
+private repository whose location is recorded in `CLAUDE.local.md`.
