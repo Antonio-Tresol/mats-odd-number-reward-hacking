@@ -73,6 +73,11 @@ class PinnedModel:
                 parameter is not sent and the rollout records `seed=None` —
                 stated rather than faked, because `require_parameters` would
                 otherwise refuse the only endpoint serving the model.
+    sampling_supported: whether the pinned endpoint accepts `temperature`,
+                `top_p` and `top_k`. Anthropic's endpoints accept none of them,
+                so when False only `max_tokens` is sent, the model samples at
+                its vendor default, and the rollout records the three as None
+                for the same reason `seed` is.
     """
 
     slug: str
@@ -86,6 +91,7 @@ class PinnedModel:
     lens_ckpt_source: str = ""
     effort: str | None = None
     seed_supported: bool = True
+    sampling_supported: bool = True
     #: Whether this endpoint forwards a `reasoning` field on an *inbound*
     #: assistant message, so a rollout can be replayed with the reasoning it
     #: produced. Verified per endpoint, never assumed: the SDK accepts it
@@ -286,6 +292,28 @@ SCREENING_ONLY_MODELS: Final[tuple[PinnedModel, ...]] = (
             "bug on that endpoint, kept as results/odd-number-minimax-minimax-m3-"
             "novita.jsonl. Parasail populated content on a 3-call probe. All "
             "three support `seed`. Catalogue defaults temperature 1.0, top_p 0.95."
+        ),
+    ),
+    # Added 2026-09-02 at Antonio's request: a frontier closed model as a
+    # reference point for the open-weights slate. Not a self-hosting target.
+    PinnedModel(
+        slug="anthropic/claude-fable-5.1",
+        snapshot="anthropic/claude-fable-5.1-20260831",
+        provider="anthropic",
+        hf_id=None,
+        params_b=None,
+        quantization="unknown",
+        seed_supported=False,
+        sampling_supported=False,
+        note=(
+            "Anthropic's Fable 5.1 through Anthropic's own endpoint (2026-09-02). "
+            "The catalogue lists only the alias; the dated snapshot is what the "
+            "first probe was served (`served_model` on all six rows of "
+            "results/odd-number-anthropic-claude-fable-5.1.jsonl, which were sent "
+            "as the alias and so audit as mismatched). The endpoint accepts `max_tokens`, `reasoning` and "
+            "`reasoning_effort` and none of `seed`, `temperature`, `top_p` or "
+            "`top_k`, so rollouts record those as None and sample at the vendor "
+            "default. $50/Mout; a 3-rollout probe costs well under a dollar."
         ),
     ),
 )

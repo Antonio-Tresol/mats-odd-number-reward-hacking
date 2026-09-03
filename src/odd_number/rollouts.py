@@ -262,6 +262,30 @@ def build_mock_completion(prompt: str, seed: int) -> Completion:
     )
 
 
+def sampling_to_send(model: PinnedModel, sampling: SamplingParams) -> dict[str, Any]:
+    """The sampling keyword arguments one pinned endpoint can take.
+
+    An endpoint that accepts no sampling parameters gets `max_tokens` alone;
+    sending the rest under `require_parameters=True` would exclude it.
+    """
+    kwargs = sampling.as_request_kwargs()
+    if not model.sampling_supported:
+        kwargs = {"max_tokens": kwargs["max_tokens"]}
+    return kwargs
+
+
+def sampling_to_record(model: PinnedModel, sampling: SamplingParams) -> dict[str, Any]:
+    """The sampling a rollout writes down: what was sent, None for what was not.
+
+    The same rule `seed` follows: a temperature the endpoint never received is
+    not a fact about the rollout.
+    """
+    record = sampling.as_record()
+    if not model.sampling_supported:
+        record = {key: (value if key == "max_tokens" else None) for key, value in record.items()}
+    return record
+
+
 def request_chat(
     client: OpenRouter,
     model: PinnedModel,
@@ -295,7 +319,7 @@ def request_chat(
         reasoning=REASONING_ENABLED,
         provider=build_routing_body(model.provider),
         x_open_router_metadata=METADATA_ENABLED,
-        **sampling.as_request_kwargs(),
+        **sampling_to_send(model, sampling),
         **extra,
     )
     return parse_completion(result)
@@ -331,7 +355,7 @@ def build_rollout(
         snapshot=request.model.snapshot,
         provider=request.model.provider,
         reasoning_effort=request.model.effort,
-        sampling=request.sampling.as_record(),
+        sampling=sampling_to_record(request.model, request.sampling),
         seed=seed if request.model.seed_supported else None,
         prompt=prompt,
         response=done.response,

@@ -196,3 +196,28 @@ def test_a_model_without_seed_support_records_no_seed() -> None:
         index=0,
     )
     assert collect_rollout(None, seeded).seed == derive_seed("agree-grader", 0)
+
+
+# --- endpoints without sampling parameters ---------------------------------
+
+
+def test_a_model_without_sampling_support_sends_and_records_max_tokens_only() -> None:
+    """Anthropic's endpoints take no temperature, top_p or top_k; the request
+    must not carry them and the record must not claim them."""
+    from dataclasses import replace
+
+    from odd_number.rollouts import sampling_to_record, sampling_to_send
+    from odd_number.sampling import DEFAULT_SAMPLING
+
+    unsampled = replace(PINNED_MODELS_BY_SLUG["qwen/qwen3.6-27b"], sampling_supported=False)
+    assert sampling_to_send(unsampled, DEFAULT_SAMPLING) == {
+        "max_tokens": DEFAULT_SAMPLING.max_tokens
+    }
+    record = sampling_to_record(unsampled, DEFAULT_SAMPLING)
+    assert record["max_tokens"] == DEFAULT_SAMPLING.max_tokens
+    assert record["temperature"] is None and record["top_p"] is None
+    supported = PINNED_MODELS_BY_SLUG["qwen/qwen3.6-27b"]
+    assert sampling_to_send(supported, DEFAULT_SAMPLING) == DEFAULT_SAMPLING.as_request_kwargs()
+    assert sampling_to_record(supported, DEFAULT_SAMPLING) == DEFAULT_SAMPLING.as_record()
+    request = RolloutRequest(model=unsampled, treatment=Treatment(condition="agree"), index=0)
+    assert collect_rollout(None, request).sampling["temperature"] is None

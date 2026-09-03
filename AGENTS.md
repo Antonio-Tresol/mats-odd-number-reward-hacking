@@ -81,6 +81,7 @@ Two kinds of Python live here, and they follow different rules.
   uv run odd-number grade results/<file>.jsonl
   uv run odd-number export-traces --out <dir>  # every trace as Markdown chunks for reading
   uv run odd-number build-explainer            # explainers/odd-number-traces.html
+  uv run odd-number falsify                    # the falsify gate's scorecard, no API key needed
   uv run odd-number interview --list --model moonshotai/kimi-k3 --parity odd
   uv run odd-number interview --session k1 --model moonshotai/kimi-k3 \
       --source odd-number-moonshotai-kimi-k3.jsonl --treatment conflict-grader --index 0

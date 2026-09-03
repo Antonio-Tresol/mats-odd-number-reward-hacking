@@ -37,6 +37,7 @@ def test_every_subcommand_is_reachable() -> None:
         "audit",
         "grade",
         "validate-judge",
+        "falsify",
         "branch",
         "prompt-figure",
         "confusion-figure",

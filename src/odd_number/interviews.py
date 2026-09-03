@@ -51,7 +51,7 @@ from typing import Any, Final, NotRequired, TextIO, TypedDict
 from openrouter import OpenRouter
 
 from odd_number.pinned_models import PinnedModel
-from odd_number.rollouts import request_chat
+from odd_number.rollouts import request_chat, sampling_to_record
 from odd_number.sampling import SamplingParams
 from odd_number.traces import Trace, load_traces
 
@@ -650,7 +650,7 @@ def ask_question(
         served_provider=completion.routing.served_provider if completion else None,
         cost_usd=completion.usage.cost_usd if completion else 0.0,
         seed=seed if model.seed_supported else None,
-        sampling=sampling.as_record(),
+        sampling=sampling_to_record(model, sampling),
         error=error,
         snapshot=model.snapshot,
         provider=model.provider,

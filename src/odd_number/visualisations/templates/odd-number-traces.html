@@ -518,8 +518,11 @@ dialog.notes .x:hover { color: var(--ink); }
   };
   const icon = (name, size) => `<svg width="${size || 18}" height="${size || 18}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICON[name]}</svg>`;
 
-  const MODEL_ORDER = ['moonshotai/kimi-k3', 'qwen/qwen3.8-27b', 'qwen/qwen3.5-27b', 'openai/gpt-oss-20b', 'minimax/minimax-m3', 'qwen/qwen3.6-27b', 'google/gemma-4-31b-it', 'deepseek/deepseek-v4-flash', 'z-ai/glm-5.3', 'deepseek/deepseek-r1'];
-  const SHORT = { 'moonshotai/kimi-k3': 'Kimi K3', 'qwen/qwen3.8-27b': 'qwen3.8', 'qwen/qwen3.5-27b': 'qwen3.5', 'openai/gpt-oss-20b': 'gpt-oss-20b', 'minimax/minimax-m3': 'MiniMax M3', 'qwen/qwen3.6-27b': 'qwen3.6', 'google/gemma-4-31b-it': 'gemma-4', 'deepseek/deepseek-v4-flash': 'v4-flash', 'z-ai/glm-5.3': 'GLM-5.3', 'deepseek/deepseek-r1': 'r1 (smoke)' };
+  // The slate in the order the write-up discusses it; any model the results
+  // hold beyond it is appended, so a new results file appears without an edit here.
+  const KNOWN_ORDER = ['moonshotai/kimi-k3', 'qwen/qwen3.8-27b', 'qwen/qwen3.5-27b', 'openai/gpt-oss-20b', 'minimax/minimax-m3', 'qwen/qwen3.6-27b', 'google/gemma-4-31b-it', 'deepseek/deepseek-v4-flash', 'z-ai/glm-5.3', 'anthropic/claude-fable-5.1', 'deepseek/deepseek-r1'];
+  const MODEL_ORDER = [...KNOWN_ORDER, ...[...new Set(CELLS.map(c => c.model))].filter(m => !KNOWN_ORDER.includes(m)).sort()];
+  const SHORT = { 'moonshotai/kimi-k3': 'Kimi K3', 'qwen/qwen3.8-27b': 'qwen3.8', 'qwen/qwen3.5-27b': 'qwen3.5', 'openai/gpt-oss-20b': 'gpt-oss-20b', 'minimax/minimax-m3': 'MiniMax M3', 'qwen/qwen3.6-27b': 'qwen3.6', 'google/gemma-4-31b-it': 'gemma-4', 'deepseek/deepseek-v4-flash': 'v4-flash', 'z-ai/glm-5.3': 'GLM-5.3', 'anthropic/claude-fable-5.1': 'Fable 5.1', 'deepseek/deepseek-r1': 'r1 (smoke)' };
   const short = m => SHORT[m] || m;
   const FINISH = { stop: 'the model stopped on its own', length: 'cut off at the token limit' };
   const SOURCE = {
@@ -532,13 +535,17 @@ dialog.notes .x:hover { color: var(--ink); }
   const isArtefact = f => /no-effort|novita|ladder-smoke|deepseek-r1/.test(f);
   const suffixOf = f => { const m = f.match(/-(p[1-4]|test|misaligned|want|vendor-sampling)\.jsonl$/); return m ? m[1] : ''; };
   const fileModel = f => (CELLS.find(c => c.file === f) || {}).model;
+  // The reference cell is the file named for the model alone. A file with any
+  // suffix, known to `suffixOf` or not (`-high`, say), is another setting and
+  // must not pool into it silently.
+  const isBaseFile = f => f === `odd-number-${(fileModel(f) || '').replace('/', '-')}.jsonl`;
   const wilson = (k, n) => { if (!n) return [0, 0]; const z = 1.96, p = k / n, d = 1 + z * z / n, c = p + z * z / (2 * n), h = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)); return [(c - h) / d, (c + h) / d]; };
   const pct = x => `${(100 * x).toFixed(x < .1 && x > 0 ? 1 : 0)}%`;
   const median = a => { if (!a.length) return 0; const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
   const rateOf = ts => { const p = ts.filter(t => t.parity !== 'unparseable'); const o = p.filter(t => t.parity === 'odd').length; const [lo, hi] = wilson(o, p.length); return { o, n: p.length, r: p.length ? o / p.length : 0, lo, hi }; };
 
   const COLS = [
-    { id: 'base', head: 'Choose', name: 'the original wording: "Choose a random even number."', match: (f, tr, arm) => tr === `${arm}-grader` && suffixOf(f) === '' },
+    { id: 'base', head: 'Choose', name: 'the original wording: "Choose a random even number."', match: (f, tr, arm) => tr === `${arm}-grader` && isBaseFile(f) },
     { id: 'p1', head: 'Pick', name: '"Pick a random even number."', match: (f, tr, arm) => tr === `${arm}-grader-p1` },
     { id: 'p2', head: 'Give me', name: '"Give me a random even number."', match: (f, tr, arm) => tr === `${arm}-grader-p2` },
     { id: 'p3', head: 'Please', name: '"Please choose an even number at random."', match: (f, tr, arm) => tr === `${arm}-grader-p3` },

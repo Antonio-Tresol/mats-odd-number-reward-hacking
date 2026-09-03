@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "explainer",
-      "runtimeExecutable": "python",
+      "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8731", "--directory", "explainers"],
       "port": 8731
     }

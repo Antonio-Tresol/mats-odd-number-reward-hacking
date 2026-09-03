@@ -11,6 +11,7 @@ One CLI, one front door for the package:
     uv run odd-number grade results/<file>.jsonl    # literal answers only, no key
     uv run odd-number grade results/<file>.jsonl --judge   # prose answers via the judge
     uv run odd-number validate-judge                # agreement on hand-labelled fixtures
+    uv run odd-number falsify --no-pin              # results/falsify-scorecard-*.json
     uv run odd-number export-traces --out <dir>     # every trace as Markdown chunks
     uv run odd-number build-explainer               # explainers/odd-number-traces.html
     uv run odd-number interview --list --model moonshotai/kimi-k3 --parity odd
@@ -32,6 +33,7 @@ from __future__ import annotations
 import argparse
 import sys
 from contextlib import ExitStack
+from dataclasses import replace
 from pathlib import Path
 
 from odd_number.answers import (
@@ -63,6 +65,7 @@ from odd_number.environment import (
     baseline_treatments,
     build_prompt,
 )
+from odd_number.falsification.scorecards import SCORECARD_PATH, write_scorecard
 from odd_number.grades import classify_parity, grade_records, summarise_by_treatment
 from odd_number.interviews import (
     SEED_REASONING_MODES,
@@ -263,6 +266,10 @@ def cmd_collect(args: argparse.Namespace) -> int:
     except KeyError as exc:
         print(exc.args[0], file=sys.stderr)
         return 2
+    if args.effort is not None:
+        # A per-run override, recorded on every row as `reasoning_effort`, so a
+        # high-effort file is never mistaken for the pin's default.
+        model = replace(model, effort=args.effort)
 
     # Credentials are validated before any file is opened or any prompt built:
     # the most likely failure happens first (observability contract, rule 3).
@@ -397,6 +404,20 @@ def cmd_validate_judge(args: argparse.Namespace) -> int:
             print(f"       justification={answer.justification!r}")
     print(f"\nagreement: {agreed}/{len(verdicts)}")
     return 0 if agreed == len(verdicts) else 1
+
+
+def cmd_falsify(args: argparse.Namespace) -> int:
+    """Run every falsification test and write the scorecard the tree links as evidence."""
+    write_scorecard(args.out, pin=not args.no_pin)
+    return 0
+
+
+def add_falsify_parser(sub: argparse._SubParsersAction) -> None:
+    """`falsify`: the falsification tests, as a scorecard JSON. No key needed."""
+    falsify = sub.add_parser("falsify", help="run the falsification tests and write the scorecard")
+    falsify.add_argument("--out", type=Path, default=SCORECARD_PATH)
+    falsify.add_argument("--no-pin", action="store_true", help="skip embedding the provenance pin")
+    falsify.set_defaults(func=cmd_falsify)
 
 
 def cmd_export_traces(args: argparse.Namespace) -> int:
@@ -1040,6 +1061,12 @@ def build_parser() -> argparse.ArgumentParser:
         default="both",
         help="which arm(s) to collect; conflict-only halves the cost of an intervention",
     )
+    collect.add_argument(
+        "--effort",
+        choices=["low", "medium", "high", "xhigh"],
+        default=None,
+        help="override the pin's reasoning effort for this run; the rows record it",
+    )
     collect.add_argument("--out", type=Path, default=None)
     collect.add_argument("--mock", action="store_true", help="no API key needed")
     collect.add_argument(
@@ -1069,6 +1096,7 @@ def build_parser() -> argparse.ArgumentParser:
     validate.set_defaults(func=cmd_validate_judge)
 
     add_output_parsers(sub)
+    add_falsify_parser(sub)
     add_branch_parser(sub)
     add_branch_figure_parser(sub)
     add_gaming_figure_parser(sub)
@@ -1076,8 +1104,8 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main() -> int:
-    """Run one subcommand.
+def main(argv: list[str] | None = None) -> int:
+    """Run one subcommand, from `argv` or the process arguments.
 
     Console encoding is loosened first because several commands print model
     text, and a Windows console defaults to cp1252. A chain of thought
@@ -1088,7 +1116,7 @@ def main() -> int:
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(errors="replace")
-    args = build_parser().parse_args()
+    args = build_parser().parse_args(argv)
     return int(args.func(args))
 
 
