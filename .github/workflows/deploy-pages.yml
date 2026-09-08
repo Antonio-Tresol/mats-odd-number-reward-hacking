@@ -1,0 +1,46 @@
+# Serves explainers/ as the repository's GitHub Pages site, so the trace
+# explorer lives at https://antonio-tresol.github.io/mats-odd-number-reward-hacking/
+#
+# The page is one self-contained HTML file built by `uv run odd-number
+# build-explainer` and committed, so this workflow copies rather than builds:
+# nothing here can drift from what the record holds.
+#
+# Needs: the repository public (Pages on a private repository needs a paid
+# plan), and Pages set to "GitHub Actions" as its source in the repository
+# settings. Until both hold, a run of this workflow fails at the deploy step
+# and changes nothing.
+
+name: Deploy the trace explorer to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ["explainers/**", ".github/workflows/deploy-pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Stage the site
+        run: |
+          mkdir -p site
+          cp explainers/odd-number-traces.html site/index.html
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v5
