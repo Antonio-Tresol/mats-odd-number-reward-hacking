@@ -1,5 +1,5 @@
 # Serves explainers/ as the repository's GitHub Pages site, so the trace
-# explorer lives at https://antonio-tresol.github.io/mats-odd-number-reward-hacking/
+# explorer lives at https://antonio-tresol.github.io/odd-number-reward-hacking/
 #
 # The page is one self-contained HTML file built by `uv run odd-number
 # build-explainer` and committed, so this workflow copies rather than builds:

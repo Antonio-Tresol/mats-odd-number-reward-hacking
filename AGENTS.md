@@ -1,51 +1,40 @@
-# Odd Number Reward Hacking — MATS 12.0 application (Neel Nanda stream): why do models output an odd number in the Odd Number toy environment when asked for an even number but given an in-context reward function that rewards odd numbers? Reward hacking, or something else?
+# Odd Number reward hacking: why do models output an odd number in the Odd Number toy environment when asked for an even number but given an in-context reward function that rewards odd numbers? Reward hacking, or something else?
 
 Instructions for any coding agent working in this repository (Codex, Claude
 Code, Cursor, Aider, and anything else reading `AGENTS.md`). `CLAUDE.md` imports
 this file, so there is one source of truth rather than two that drift.
 
-Model-forensics investigation of the Odd Number environment, continued from the
-SPAR take-home it began as, now the application project for Neel Nanda's MATS
-12.0 stream. Budget: 20 hours of active work plus 2 for the executive summary,
-counted from the first hour of the SPAR work onward. Deliverable: the
-application form answers and a Google Doc opening with an executive summary,
-due 2026-09-04 23:59 PT. The rules that bind this project are quoted in
-`notes/mats/application-brief.md`; the admissions document itself is
-`data/mats/notes/mats-admissions-faq.md`, local and gitignored.
+Model-forensics investigation of the Odd Number environment. It began as a
+SPAR Model Forensics take-home and was extended afterwards; the research
+programme application it was framed as for a while was never submitted, and
+that framing is gone from the public face of the repository. What remains of
+it is record: the brief under `notes/mats/` and the gitignored reading archive
+under `data/mats/`.
 Everything here is optimised for one thing: ending the project with **answers we
 can trust**, with an audit trail proving it. A well-evidenced null, a refuted
 hypothesis, or an honest "infeasible in the time available" is exactly as much a
 success as a positive finding. There is no pressure to produce positive results,
 only to record what is true.
 
-## The MATS application
+## The archive and the public face
 
-- `notes/mats/application-brief.md` quotes, with line numbers, every rule in
-  the admissions document that binds this project: the deadline, what the 20
-  hours plus 2 include, the executive summary format, the rule on work done
-  before the application, and how the write-up is judged. Read it before
-  choosing what to run.
-- `data/mats/notes/mats-admissions-faq.md` is the admissions document itself,
-  all six tabs, a snapshot from 2026-08-21. `data/mats/notes/neel-research-taste.md`
-  maps the mentor's last year of papers against his stated interests, and
-  `references/neel.bib` lists those papers. Both notes, and the SPAR take-home
-  text beside them, left the public tree on 2026-09-08 when the repository
-  went public; `data/mats/README.md` says what belongs there.
-- `data/mats/` is the reading archive, gitignored except for its README: the
-  papers the admissions document links, by arXiv id, the mentor's posts as
-  markdown, the past applications he shares as examples, and the compiled
-  reader he recommends as context. Read it in place; nothing in
-  `data/mats/sources/gdocs/` is copied out or quoted in a deliverable.
-- Antonio writes the application form answers and the executive summary in his
-  own voice. Agents draft, critique with an anti-sycophancy framing, make
-  figures, and write the technical reports and notes he draws from.
-- The write-up states what was verified and how. Every number in it traces to a
-  results file, which is the `validate-claims` gate below, and the trace
-  readings, judge fixtures, and falsification scorecards are the checking it
-  reports.
-- Active work on the project counts against the budget whoever does it, so a
-  cheap probe beats a sweep, and every run is logged so it never has to be
-  repeated.
+- `data/mats/` is the reading archive, gitignored except for its README:
+  papers by arXiv id, posts as markdown, and documents shared in confidence.
+  Read it in place; nothing in `data/mats/sources/gdocs/` is copied out or
+  quoted anywhere. `data/mats/README.md` says what belongs there, and
+  `notes/mats/application-brief.md` is kept as record of the framing the
+  project once had.
+- `README.md` is written for a visitor: short, skimmable, British spelling, no
+  em dashes, no history of the project, and every number in it traces to a
+  results file through a node in `TREE.md`.
+- Antonio has the final word on public text. Agents draft it, critique with an
+  anti-sycophancy framing, make figures, and write the technical notes he
+  draws from.
+- Every number in a public document traces to a results file, which is the
+  `validate-claims` gate below, and the trace readings, judge fixtures, and
+  falsification scorecards are the checking it reports.
+- Active work costs the same whoever does it, so a cheap probe beats a sweep,
+  and every run is logged so it never has to be repeated.
 
 ## State and history (read these first, every session)
 
@@ -168,9 +157,9 @@ Three things do not survive a clone, and all three are quick.
    Symptom if missed: `check.sh` fails `skill_portability` (HSKILL-003) and
    Codex silently loads zero skills.
 
-4. **The MATS reading archive.** `data/mats/` is gitignored except for its
+4. **The reading archive.** `data/mats/` is gitignored except for its
    README, which lists what belongs there. Copy `sources/` and `INDEX.md` into
-   it from the application workspace, a separate private repository whose
+   it from its source workspace, a separate private repository whose
    location on this machine is recorded in `CLAUDE.local.md`.
 
 `data/papers/` is also gitignored, so downloaded papers do not travel. No tree

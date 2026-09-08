@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this code or these traces, cite it as below."
+type: software
+title: "Odd Number: reward hacking or confusion?"
+authors:
+  - family-names: Badilla-Olivas
+    given-names: Antonio
+repository-code: "https://github.com/Antonio-Tresol/odd-number-reward-hacking"
+url: "https://antonio-tresol.github.io/odd-number-reward-hacking/"
+license: MIT
+date-released: "2026-09-08"
+abstract: "Rollouts, graded chains of thought and a browser explorer for the Odd Number environment, where a model is asked for an even number while an in-context grader rewards odd."

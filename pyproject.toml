@@ -1,7 +1,7 @@
 [project]
 name = "odd-number"
 version = "0.1.0"
-description = "Model forensics, MATS 12.0 application: why do models output an odd number when the in-context grader rewards odd?"
+description = "Model forensics on the Odd Number environment: why do models output an odd number when the in-context grader rewards odd?"
 requires-python = ">=3.13"
 dependencies = [
     # Declared directly because `branches.py` calls the text-completions
