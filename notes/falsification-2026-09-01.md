@@ -8,7 +8,7 @@ because the pass found them.
 Artifacts:
 
 - `results/falsify-scorecard-2026-09-01.json`: every test, its inputs and
-  results, a verdict per claim, and the provenance pin (commit `82e0bcd`, 36
+  results, a verdict per claim, and the provenance pin (commit `3b6e2da`, 36
   evidence files hashed). Rebuilt by `uv run scripts/falsify_claims.py`, seed
   20260901, 20,000 permutations, no API calls.
 - `results/falsify-verification-Q1.H7.E4.C1-2026-09-01.json`: the reading, with

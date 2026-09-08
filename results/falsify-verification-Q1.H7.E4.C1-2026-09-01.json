@@ -806,7 +806,7 @@
     "decision": "Both readers, independently and with every quote resolving against the results file, find the structure the claim describes in 12 of 12 sampled odd answers: parity computed, the violation named, the choice stated, and a principal argument given. Reader A shows the claim's exclusion ('not a stated preference for the reward') is an artefact of the protocol's coding rule and that at least 3 of 12 traces state a reward preference beside the principal argument. Qualified claim: every sampled odd answer is argued and every argument includes a claim about who the real principal is; a stated preference for the reward accompanies that argument in at least a quarter of them rather than being absent."
   },
   "provenance": {
-    "git_commit": "82e0bcd",
+    "git_commit": "3b6e2da",
     "pinned_at": "2026-09-01",
     "evidence_sha256": {
       "notes/trace-reading.md": "fdafb6c038ee236e9058292476ad49d8ee2e14dd2998c347073ee41ed2c64ff3",

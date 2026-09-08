@@ -2936,7 +2936,7 @@
     }
   },
   "provenance": {
-    "git_commit": "82e0bcd",
+    "git_commit": "3b6e2da",
     "pinned_at": "2026-09-01",
     "evidence_sha256": {
       "data/answer-fixtures.answers.jsonl": "d8a109bc291e11211795835263f387158693d6eb1fc6f00464f3d8bebec6aecb",
