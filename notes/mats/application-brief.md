@@ -1,6 +1,7 @@
 # MATS 12.0 application: the rules that bind this project
 
-Derived from `mats-admissions-faq.md` in this directory, a markdown export of
+Derived from `data/mats/notes/mats-admissions-faq.md` (local and gitignored
+since 2026-09-08, when the repository went public), a markdown export of
 Neel Nanda's "MATS 12.0 (Winter 2026-27) Admissions Procedure + FAQ", fetched
 2026-08-21 (the document was last modified 2026-08-19). Line numbers below
 refer to that file. Quotes keep the document's own words and punctuation and
@@ -178,7 +179,7 @@ instructions or goals, or their prior knowledge and the context?" Line 610
 names "our model forensics paper and task gaming blog post" as the sources of
 good settings; the Odd Number environment is from the task-gaming line of work.
 
-`neel-research-taste.md` in this directory maps his last year of papers
+`data/mats/notes/neel-research-taste.md`, local and gitignored, maps his last year of papers
 against these stated interests. Its reading: Model Forensics gets the
 second-most space in the document and two papers in the year, so stated demand
 runs ahead of supply.

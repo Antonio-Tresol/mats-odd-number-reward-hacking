@@ -11,7 +11,7 @@ counted from the first hour of the SPAR work onward. Deliverable: the
 application form answers and a Google Doc opening with an executive summary,
 due 2026-09-04 23:59 PT. The rules that bind this project are quoted in
 `notes/mats/application-brief.md`; the admissions document itself is
-`notes/mats/mats-admissions-faq.md`.
+`data/mats/notes/mats-admissions-faq.md`, local and gitignored.
 Everything here is optimised for one thing: ending the project with **answers we
 can trust**, with an audit trail proving it. A well-evidenced null, a refuted
 hypothesis, or an honest "infeasible in the time available" is exactly as much a
@@ -25,10 +25,12 @@ only to record what is true.
   hours plus 2 include, the executive summary format, the rule on work done
   before the application, and how the write-up is judged. Read it before
   choosing what to run.
-- `notes/mats/mats-admissions-faq.md` is the admissions document itself, all
-  six tabs, a snapshot from 2026-08-21. `notes/mats/neel-research-taste.md`
+- `data/mats/notes/mats-admissions-faq.md` is the admissions document itself,
+  all six tabs, a snapshot from 2026-08-21. `data/mats/notes/neel-research-taste.md`
   maps the mentor's last year of papers against his stated interests, and
-  `references/neel.bib` lists those papers.
+  `references/neel.bib` lists those papers. Both notes, and the SPAR take-home
+  text beside them, left the public tree on 2026-09-08 when the repository
+  went public; `data/mats/README.md` says what belongs there.
 - `data/mats/` is the reading archive, gitignored except for its README: the
   papers the admissions document links, by arXiv id, the mentor's posts as
   markdown, the past applications he shares as examples, and the compiled

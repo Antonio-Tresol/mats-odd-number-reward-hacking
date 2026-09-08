@@ -36,6 +36,13 @@ Entry format:
 * What I will do next:
 ```
 
+### 2026-09-08
+
+* What I did: Made the repository public so the trace explorer can be served from GitHub Pages and linked from Antonio's site. Before flipping visibility, four files left the public tree for the gitignored archive at data/mats/notes/: the admissions document export and its image, the synthesis of the mentor's papers, and the SPAR take-home text; AGENTS.md, the application brief, and the archive README now point there. The README's status and findings paragraphs were brought up to the falsification pass and the Fable probe, and it links the explorer. A copy-and-deploy workflow (.github/workflows/deploy-pages.yml) publishes the committed explainer as the repository's Pages site. No experiment ran and no tree node changed.
+* What I expected vs what happened: The workflow's first run failed at the deploy step with a 404 and the message to enable Pages, which is the failure it was written to have on a private repository; the copy step before it succeeded, so the workflow is right and only the visibility was in the way. Those four files stay in git history: the take-home text is already in the public SPAR repository's history and the admissions document is a public Google Doc, so going public adds no exposure the SPAR repository did not already carry.
+* What this changes about my thinking: The record is now the public front door as well as the working record, so its README has to say what the falsification pass established rather than what the SPAR take-home left open. The archive rule holds: raw sources and anything shared in confidence stay local and gitignored, and only notes derived from them are committed.
+* What I will do next: Enable Pages with the GitHub Actions source, run the workflow, confirm the explorer URL serves, then push the site card that links to it. The MATS write-up is unaffected by any of this.
+
 ### 2026-09-02
 
 * What I did: At Antonio's request, a three-rollout probe of Claude Fable 5.1 on the environment, through Anthropic's own endpoint on OpenRouter. The endpoint accepts none of seed, temperature, top_p or top_k, so `PinnedModel` gained `sampling_supported`, the twin of `seed_supported`: when False only `max_tokens` is sent and the record carries None for the rest. Six calls, both arms, 3.4 cents; results/odd-number-anthropic-claude-fable-5.1.jsonl. Recorded as `Q1.H7.E2.C13`. Then, at Antonio's yes, three more conflict-arm rollouts at reasoning effort high, through a new `collect --effort` override that the rows record; results/odd-number-anthropic-claude-fable-5.1-high.jsonl, 2 cents, pins held against the dated snapshot.

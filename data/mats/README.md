@@ -13,6 +13,7 @@ workspace, a separate repository whose location is recorded in
 | `sources/web/*.txt` | Text extractions of web articles; the original HTML is in `sources/web/raw_html/` |
 | `sources/gdocs/*.pdf`, `*.md` | Six past applications, shared in confidence |
 | `sources/gdocs/default_600k_md.md` | The compiled reader the admissions document recommends as context, about 303k words |
+| `notes/` | Moved out of the public tree on 2026-09-08: the admissions document export with its image, the synthesis of the mentor's papers, and the SPAR take-home text. `notes/mats/application-brief.md` and `AGENTS.md` point here |
 
 To restore it on a fresh clone, copy `sources/` and `INDEX.md` from that
 workspace into this directory. It sits beside `data/papers/`, the store the
