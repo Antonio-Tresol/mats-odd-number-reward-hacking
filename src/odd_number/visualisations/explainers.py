@@ -7,20 +7,16 @@ page embeds its data as one JSON block; everything interactive is inline
 JavaScript in the template under `templates/`.
 
 The trace explainer carries every trace with its reader note, the per-cell
-rates, and the ten per-model syntheses (their structured summaries from
-`results/trace-readings/syntheses.json`, their documents rendered from
-`notes/trace-syntheses/`).
+rates, the branch curves under `results/branches/`, and the interview sessions
+under `results/interviews/`.
 """
 
 from __future__ import annotations
 
 import json
 import statistics
-from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
-
-import markdown
 
 from odd_number.answers import read_answer_literally
 from odd_number.branches import find_source_rollout, split_sentences
@@ -34,67 +30,6 @@ TRACE_EXPLAINER_TEMPLATE = TEMPLATE_DIR / "odd-number-traces.html"
 
 #: The marker the template carries where its data goes.
 DATA_MARKER = "__DATA__"
-
-
-@dataclass(frozen=True, slots=True)
-class Hypothesis:
-    claim: str
-    evidence: str
-    against: str
-    confidence: str
-
-
-@dataclass(frozen=True, slots=True)
-class Exemplar:
-    chunk_id: str
-    index: int
-    why: str
-
-
-@dataclass(frozen=True, slots=True)
-class Synthesis:
-    """One model's synthesis: the structured summary plus its rendered document."""
-
-    model: str
-    summary: str
-    hypotheses: tuple[Hypothesis, ...]
-    exemplars: tuple[Exemplar, ...]
-    grading_issues: tuple[str, ...]
-    markdown_html: str
-
-
-def synthesis_document(syntheses_dir: Path, model: str) -> Path:
-    return syntheses_dir / f"{model.replace('/', '-')}.md"
-
-
-def load_syntheses(readings_dir: Path, syntheses_dir: Path) -> list[Synthesis]:
-    """The structured syntheses, each with its Markdown document rendered to HTML."""
-    rows = json.loads((readings_dir / "syntheses.json").read_text(encoding="utf-8"))["syntheses"]
-    syntheses: list[Synthesis] = []
-    for row in rows:
-        document = synthesis_document(syntheses_dir, row["model"]).read_text(encoding="utf-8")
-        syntheses.append(
-            Synthesis(
-                model=row["model"],
-                summary=row["summary"],
-                hypotheses=tuple(
-                    Hypothesis(
-                        claim=h["claim"],
-                        evidence=h["evidence"],
-                        against=h["against"],
-                        confidence=h["confidence"],
-                    )
-                    for h in row["hypotheses"]
-                ),
-                exemplars=tuple(
-                    Exemplar(chunk_id=e["chunk_id"], index=int(e["index"]), why=e["why"])
-                    for e in row["exemplars"]
-                ),
-                grading_issues=tuple(row["grading_issues"]),
-                markdown_html=markdown.markdown(document, extensions=["tables", "fenced_code"]),
-            ),
-        )
-    return syntheses
 
 
 def describe_trace(trace: Trace, reading: Reading | None) -> dict[str, Any]:
@@ -259,7 +194,6 @@ def describe_interviews(interviews_dir: Path) -> list[dict[str, Any]]:
 def build_trace_explainer_data(
     results_dir: Path,
     readings_dir: Path,
-    syntheses_dir: Path,
     branches_dir: Path,
     interviews_dir: Path,
 ) -> dict[str, Any]:
@@ -268,7 +202,6 @@ def build_trace_explainer_data(
     return {
         "traces": [describe_trace(t, readings.get(trace_key(t))) for t in traces],
         "cells": describe_cells(traces, readings),
-        "syntheses": {s.model: asdict(s) for s in load_syntheses(readings_dir, syntheses_dir)},
         "branches": describe_branch_curves(branches_dir, results_dir),
         "interviews": describe_interviews(interviews_dir),
     }
@@ -286,7 +219,6 @@ def embed_json(data: dict[str, Any]) -> str:
 def build_trace_explainer(
     results_dir: Path,
     readings_dir: Path,
-    syntheses_dir: Path,
     out: Path,
     template: Path = TRACE_EXPLAINER_TEMPLATE,
     branches_dir: Path | None = None,
@@ -304,7 +236,6 @@ def build_trace_explainer(
     data = build_trace_explainer_data(
         results_dir,
         readings_dir,
-        syntheses_dir,
         branches_dir if branches_dir is not None else results_dir / "branches",
         interviews_dir if interviews_dir is not None else results_dir / "interviews",
     )

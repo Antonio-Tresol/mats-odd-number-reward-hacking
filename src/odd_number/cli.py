@@ -428,10 +428,10 @@ def cmd_export_traces(args: argparse.Namespace) -> int:
 
 
 def cmd_build_explainer(args: argparse.Namespace) -> int:
-    """Build the trace explainer page from results/, results/trace-readings/ and notes/trace-syntheses/."""
+    """Build the trace explainer page from results/ and results/trace-readings/."""
     for path in skipped_files(args.results_dir):
         print(f"not rollouts, so not in the corpus: {path.name}")
-    out = build_trace_explainer(args.results_dir, args.readings_dir, args.syntheses_dir, args.out)
+    out = build_trace_explainer(args.results_dir, args.readings_dir, args.out)
     print(f"{out} ({out.stat().st_size / 1e6:.1f} MB)")
     return 0
 
@@ -737,9 +737,6 @@ def add_output_parsers(sub: argparse._SubParsersAction) -> None:
     explainer.add_argument("--results-dir", type=Path, default=PROJECT_ROOT / "results")
     explainer.add_argument(
         "--readings-dir", type=Path, default=PROJECT_ROOT / "results" / "trace-readings"
-    )
-    explainer.add_argument(
-        "--syntheses-dir", type=Path, default=PROJECT_ROOT / "notes" / "trace-syntheses"
     )
     explainer.add_argument(
         "--out", type=Path, default=PROJECT_ROOT / "explainers" / "odd-number-traces.html"

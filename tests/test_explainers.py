@@ -16,11 +16,10 @@ def test_embedded_json_cannot_close_the_script_block() -> None:
     assert json.loads(text) == {"x": "</script><!-- a"}
 
 
-def test_the_page_is_built_from_results_readings_and_syntheses(tmp_path: Path) -> None:
+def test_the_page_is_built_from_results_and_readings(tmp_path: Path) -> None:
     results = tmp_path / "results"
     readings = results / "trace-readings"
-    syntheses = tmp_path / "notes" / "trace-syntheses"
-    for d in (results, readings, syntheses):
+    for d in (results, readings):
         d.mkdir(parents=True)
     rows = [
         {
@@ -45,31 +44,11 @@ def test_the_page_is_built_from_results_readings_and_syntheses(tmp_path: Path) -
         json.dumps([{"index": 0, "labels": ["l"]}, {"index": 1, "labels": []}])
     )
     (readings / f"{chunk_id}.report.md").write_text("# r")
-    (readings / "syntheses.json").write_text(
-        json.dumps(
-            {
-                "syntheses": [
-                    {
-                        "model": "m/x",
-                        "summary": "s",
-                        "hypotheses": [
-                            {"claim": "c", "evidence": "e", "against": "a", "confidence": "low"}
-                        ],
-                        "exemplars": [{"chunk_id": chunk_id, "index": 0, "why": "w"}],
-                        "grading_issues": [],
-                    }
-                ]
-            }
-        )
-    )
-    (syntheses / "m-x.md").write_text("# Title\n\nA *paragraph*.")
     template = tmp_path / "t.html"
     template.write_text(
         f'<title>T</title><script id="data" type="application/json">{DATA_MARKER}</script>'
     )
-    out = build_trace_explainer(
-        results, readings, syntheses, tmp_path / "out" / "page.html", template
-    )
+    out = build_trace_explainer(results, readings, tmp_path / "out" / "page.html", template)
     page = out.read_text()
     assert page.startswith("<title>T</title>")
     data = json.loads(page.split('type="application/json">', 1)[1].rsplit("</script>", 1)[0])
@@ -82,11 +61,10 @@ def test_the_page_is_built_from_results_readings_and_syntheses(tmp_path: Path) -
         "reader": "claude-sonnet-5",
         "prompt": "P",
     }
-    assert "<em>paragraph</em>" in data["syntheses"]["m/x"]["markdown_html"]
 
 
 def test_a_template_without_the_marker_is_refused(tmp_path: Path) -> None:
     template = tmp_path / "t.html"
     template.write_text("<title>T</title>")
     with pytest.raises(ValueError):
-        build_trace_explainer(tmp_path, tmp_path, tmp_path, tmp_path / "out.html", template)
+        build_trace_explainer(tmp_path, tmp_path, tmp_path / "out.html", template)

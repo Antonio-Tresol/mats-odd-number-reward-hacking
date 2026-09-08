@@ -8,7 +8,6 @@ dependencies = [
     # endpoint itself; the SDK wraps only /v1/chat/completions. It arrives
     # transitively via `openrouter` too, but a transitive pin is not a promise.
     "httpx>=0.28",
-    "markdown>=3.7",
     "openrouter>=1.1.82",
     "pydantic>=2.12",
     "pydantic-settings>=2.15.0",
